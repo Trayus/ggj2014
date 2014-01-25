@@ -16,6 +16,49 @@ var enemies = new Array();
 var timer = 0;
 var scroll = 0;
 
+//shooting functions
+var fourSecShoot = function(me) {
+	if (me.timer % 100 === 0 && me.type === 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+	}
+	if (self.timer % 200 === 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+	}
+}
+var twoSecShoot = function(me) {
+	if (me.timer % 50 === 0 && me.type === 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .4, "big_p_bullet.png", 1, false));
+	}
+	if (self.timer % 100 === 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .4, "big_p_bullet.png", 1, false));
+	}
+}
+//moving functions
+var sinXMove = function(me) {
+	me.y += me.speed;
+	me.x += Math.sin(me.timer/50);
+}
+var fastYMove = function(me) {
+	me.y += me.speed * 3;
+}
+var CircleMove = function(me) {
+	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
+	me.x += Math.sin(me.timer/20) * 5;
+}
+
+
+var spawnTime = new Array();
+spawnTime[0] = new spawn(100, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
+spawnTime[1] = new spawn(200, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
+spawnTime[2] = new spawn(300, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
+spawnTime[3] = new spawn(400, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
+
+var spawn = function(time, enemy) {
+	this.time = time;
+	this.enemy = enemy;
+}
+
+
 
 function loadGame()
 {
@@ -136,22 +179,34 @@ function update(dt)
 	}
 }
 
+
+
+
 function spawnEnemies(timer) {
-	var twoSecShoot = function(me) {
-		if (me.timer % 100 === 0 && me.type === 0) {
-			bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
-		}
-		if (self.timer % 200 === 0) {
-			bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+	for (i = 0; i < spawnTime.length; i++) 
+	{
+		if (spawnTime[i].time == timer)
+		{
+			enemies.push(spawnTime[i].enemy);
 		}
 	}
-	var sinXMove = function(me) {
-		me.y += me.speed;
-		me.x += Math.sin(me.timer/50);
+	/*if (timer % 100 == 0) {
+		enemies.push(new BasicEnemy(Math.random() * 550, -20, player.type, "small", CircleMove, twoSecShoot));
 	}
-	
-	if (timer % 50 == 0) {
-		enemies.push(new BasicEnemy(Math.random() * 550, -20, player.type, "small", sinXMove, twoSecShoot));
+	if (timer % 100 == 0) {
+		enemies.push(new BasicEnemy(Math.random() * 550, -20, player.type, "small", sinXMove, fourSecShoot));
+	}*/
+	if (timer == 100) {
+	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
+	}
+	if (timer == 150) {
+	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
+	}
+	if (timer == 200) {
+	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
+	}
+	if (timer == 250) {
+	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
 	}
 }
 
