@@ -7,13 +7,14 @@ var menuoption = 0;
 
 /** global images **/
 var bg_image, menu_image, gameover_image;
-var healthbar, heart;
+var healthbar, heart, gamebg;
 /** end images **/
 
 var player;
 var bullets = new Array();
 var enemies = new Array();
 var timer = 0;
+var scroll = 0;
 
 
 function loadGame()
@@ -22,6 +23,7 @@ function loadGame()
 	gamestate = MENU;
 	
 	bg_image = new Image(); bg_image.src = "bg.png";
+	gamebg = new Image(); gamebg.src = "gamebg.png";
 	menu_image = new Image(); menu_image.src = "menu.png";
 	gameover_image = new Image(); gameover_image.src = "gameover.png";
 	healthbar = new Image(); healthbar.src = "life.png";
@@ -114,7 +116,7 @@ function update(dt)
 	else // game
 	{
 		if (timer % 100 == 0) {
-		    enemies.push(new BasicEnemy(Math.random() * 500, -50, 0));
+		    enemies.push(new BasicEnemy(Math.random() * 500, -50, 0, "small"));
 		}
 		player.update(dt);
 		for (i = 0; i < bullets.length; i++)
@@ -129,6 +131,9 @@ function update(dt)
 		collisionVSenemies();
 		cleanbullets();
 		timer++;
+		scroll += 0.3;
+		if (scroll > 600)
+			scroll -= 600;
 	}
 }
 
@@ -147,7 +152,8 @@ function draw()
 	}
 	else // game
 	{
-		ctx.drawImage(bg_image, 0, 0);
+		ctx.drawImage(gamebg, 0, scroll);
+		ctx.drawImage(gamebg, 0, scroll - 600);
 		player.draw(ctx);
 		
 		for (i = 0; i < bullets.length; i++)

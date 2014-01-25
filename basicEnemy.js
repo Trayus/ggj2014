@@ -1,17 +1,17 @@
-var BasicEnemy = function(x, y, type)
+var BasicEnemy = function(x, y, type, size)
 {
 	this.x = x;
 	this.y = y;
 	this.xoff = 30;
 	this.yoff = 8;
 	this.timer = 0;
-	this.health = 3; 
+	this.health = 30; 
 	this.speed = 1;
 	this.type = type;
 	this.aship_im = new Image();
-	this.aship_im.src = "playera.png";
+	this.aship_im.src = "enemya_" + size + ".png";
 	this.bship_im = new Image();
-	this.bship_im.src = "playerb.png";
+	this.bship_im.src = "enemyb_" + size + ".png";
 	var self = this;
 	
 	this.update = function(dt)
