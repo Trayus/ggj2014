@@ -10,6 +10,7 @@ var bg_image, menu_image;
 /** end images **/
 
 var player;
+var bullets = new Array();
 
 function loadGame()
 {
@@ -48,6 +49,10 @@ function update(dt)
 	else // game
 	{
 		player.update(dt);
+		for (i = 0; i < bullets.length; i++)
+		{
+			bullets[i].update(dt);
+		}
 	}
 }
 
@@ -59,7 +64,6 @@ function draw()
 	if (gamestate == MENU)
 	{
 		ctx.drawImage(menu_image, 0, 0);
-		
 	}
 	else if (gamestate == GAMEOVER)
 	{
@@ -69,6 +73,10 @@ function draw()
 	{
 		ctx.drawImage(bg_image, 0, 0);
 		player.draw(ctx);
-	
+		
+		for (i = 0; i < bullets.length; i++)
+		{
+			bullets[i].draw(ctx);
+		}
 	}
 }
