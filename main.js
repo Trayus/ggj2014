@@ -6,7 +6,8 @@ var delta = 20;
 var menuoption = 0;
 
 /** global images **/
-var bg_image, menu_image;
+var bg_image, menu_image, gameover_image;
+var healthbar, heart;
 /** end images **/
 
 var player;
@@ -22,10 +23,12 @@ function loadGame()
 	
 	bg_image = new Image(); bg_image.src = "bg.png";
 	menu_image = new Image(); menu_image.src = "menu.png";
+	gameover_image = new Image(); gameover_image.src = "gameover.png";
+	healthbar = new Image(); healthbar.src = "life.png";
+	heart = new Image(); heart.src = "heart.png";
 	
 	gameLoop();
 }
-
 
 function gameLoop()
 {
@@ -33,6 +36,65 @@ function gameLoop()
 	draw();
 
 	window.setTimeout(gameLoop, delta);
+}
+
+function collisionVSplayer()
+{
+	for (i = 0; i < bullets.length; i++)
+	{
+		if (!bullets[i].playerbullet && player.hitbox().hits(bullets[i].hitbox()))
+		{		
+			player.reset();
+			bullets = new Array();
+			enemies = new Array();
+		}
+	}
+	for (i = 0; i < enemies.length; i++)
+	{
+		if (player.hitbox().hits(enemies[i].hitbox()))
+		{		
+			player.reset();
+			bullets = new Array();
+			enemies = new Array();
+		}
+	}
+	
+	if (player.lives <= 0)
+	{
+		gamestate = GAMEOVER
+	}
+}
+function collisionVSenemies()
+{
+	for (i = 0; i < enemies.length; i++)
+	{
+		for (j = 0; j < bullets.length; j++)
+		{
+			if (bullets[j].playerbullet && enemies[i].hitbox().hits(bullets[j].hitbox()))
+			{		
+				enemies[i].health -= bullets[j].damage;
+				bullets.splice(j, 1);
+				j--;
+			}
+		}
+		if (enemies[i].health < 0)
+		{
+			enemies.splice(i, 1);
+			i--;
+		}
+	}
+}
+function cleanbullets()
+{
+	for (i = 0; i < bullets.length; i++)
+	{
+		if (bullets[i].x < -10 || bullets[i].x > 510 ||
+			bullets[i].y < -10 || bullets[i].y > 610)
+		{	
+			bullets.splice(i, 1);
+			i--;
+		}	
+	}
 }
 
 function update(dt)
@@ -47,7 +109,7 @@ function update(dt)
 	}
 	else if (gamestate == GAMEOVER)
 	{
-	
+		// nada
 	}
 	else // game
 	{
@@ -63,6 +125,9 @@ function update(dt)
 		{
 			enemies[i].update(dt);
 		}
+		collisionVSplayer();
+		collisionVSenemies();
+		cleanbullets();
 		timer++;
 	}
 }
@@ -78,7 +143,7 @@ function draw()
 	}
 	else if (gamestate == GAMEOVER)
 	{
-	
+		ctx.drawImage(gameover_image, 0, 0);	
 	}
 	else // game
 	{
@@ -93,5 +158,14 @@ function draw()
 		{
 			enemies[i].draw(ctx);
 		}
+		
+		ctx.drawImage(healthbar, 10, 10);
+		ctx.drawImage(heart, 10 + 4, 10 + 4);
+		if (player.lives > 1)
+			ctx.drawImage(heart, 10 + 4 + 16, 10 + 4);
+		if (player.lives > 2)
+			ctx.drawImage(heart, 10 + 4 + 16 * 2, 10 + 4);
+			
+		
 	}
 }

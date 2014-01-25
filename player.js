@@ -33,7 +33,7 @@ var Player = function(x, y)
 		if (38 in keysDown && !(40 in keysDown))
 		{
 			if ((37 in keysDown && !(39 in keysDown)) || (39 in keysDown && !(37 in keysDown)))
-				self.y -= Math.sqrt(self.speed * dt);
+				self.y -= self.speed * dt * 0.7;
 			else
 				self.y -= self.speed * dt;
 		}
@@ -41,7 +41,7 @@ var Player = function(x, y)
 		if (40 in keysDown && !(38 in keysDown))
 		{
 			if ((37 in keysDown && !(39 in keysDown)) || (39 in keysDown && !(37 in keysDown)))
-				self.y += Math.sqrt(self.speed * dt);
+				self.y += self.speed * dt * 0.7;
 			else
 				self.y += self.speed * dt;
 		}
@@ -49,7 +49,7 @@ var Player = function(x, y)
 		if (37 in keysDown && !(39 in keysDown))
 		{
 			if ((40 in keysDown && !(38 in keysDown)) || (38 in keysDown && !(40 in keysDown)))
-				self.x -= Math.sqrt(self.speed * dt);
+				self.x -= self.speed * dt * 0.7;
 			else
 				self.x -= self.speed * dt;
 		}
@@ -57,29 +57,28 @@ var Player = function(x, y)
 		if (39 in keysDown && !(37 in keysDown))
 		{
 			if ((40 in keysDown && !(38 in keysDown)) || (38 in keysDown && !(40 in keysDown)))
-				self.x += Math.sqrt(self.speed * dt);
+				self.x += self.speed * dt * 0.7;
 			else
 				self.x += self.speed * dt;			
 		}
 	
 		if (self.bullettimer < 0)
 		{
-			self.bullettimer = 50;
-			bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, -0.4, "big_p_bullet.png", true)); 
+			self.bullettimer = (self.type == 1? 30 : 60);
+			bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, (self.type == 1? -0.6 : -0.4), "big_p_bullet.png", 2, true)); 
 			if (self.type == 0)
 			{
-				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 				
+				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 				
 			}
 		}
 		else
 			self.bullettimer-=dt;
-		
-		
+				
 		
 		if (81 in keysDown && !swap)
 		{
@@ -97,6 +96,14 @@ var Player = function(x, y)
 		}
 		if (!(81 in keysDown) && !(69 in keysDown))
 			swap = false;
+	}
+	
+	this.hitbox = function()
+	{
+		if (self.type == 0)
+			return new Hitbox(self.x - 10, self.y + 6, 60, 26);
+		else
+			return new Hitbox(self.x + 6, self.y + 6, 22, 20);
 	}
 	
 	this.shipSettings = function()
