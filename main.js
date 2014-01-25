@@ -45,18 +45,27 @@ var CircleMove = function(me) {
 	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
 	me.x += Math.sin(me.timer/20) * 5;
 }
-
-
-var spawnTime = new Array();
-spawnTime[0] = new spawn(100, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
-spawnTime[1] = new spawn(200, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
-spawnTime[2] = new spawn(300, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
-spawnTime[3] = new spawn(400, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
+var CCircleMove = function(me) {
+	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
+	me.x -= Math.sin(me.timer/20) * 5;
+}
 
 var spawn = function(time, enemy) {
 	this.time = time;
 	this.enemy = enemy;
 }
+
+var spawnTime = new Array();
+spawnTime.push(new spawn(100, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+spawnTime.push(new spawn(200, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+spawnTime.push(new spawn(300, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+spawnTime.push(new spawn(400, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+spawnTime.push(new spawn(100, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+spawnTime.push(new spawn(200, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+spawnTime.push(new spawn(300, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+spawnTime.push(new spawn(400, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+
+
 
 
 
@@ -189,28 +198,11 @@ function update(dt)
 function spawnEnemies(timer) {
 	for (i = 0; i < spawnTime.length; i++) 
 	{
+		console.log(spawnTime[i].time + " " + timer);
 		if (spawnTime[i].time == timer)
 		{
 			enemies.push(spawnTime[i].enemy);
 		}
-	}
-	/*if (timer % 100 == 0) {
-		enemies.push(new BasicEnemy(Math.random() * 550, -20, player.type, "small", CircleMove, twoSecShoot));
-	}
-	if (timer % 100 == 0) {
-		enemies.push(new BasicEnemy(Math.random() * 550, -20, player.type, "small", sinXMove, fourSecShoot));
-	}*/
-	if (timer == 100) {
-	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
-	}
-	if (timer == 150) {
-	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
-	}
-	if (timer == 200) {
-	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
-	}
-	if (timer == 250) {
-	    enemies.push(new BasicEnemy(250, -20, player.type, "small", CircleMove, twoSecShoot));
 	}
 }
 
