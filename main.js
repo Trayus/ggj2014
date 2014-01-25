@@ -151,7 +151,7 @@ function spawnEnemies(timer) {
 	}
 	
 	if (timer % 50 == 0) {
-		enemies.push(new BasicEnemy(Math.random() * 550, 50, player.type, sinXMove, twoSecShoot));
+		enemies.push(new BasicEnemy(Math.random() * 550, -20, player.type, "small", sinXMove, twoSecShoot));
 	}
 }
 

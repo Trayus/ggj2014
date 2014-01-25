@@ -1,9 +1,4 @@
 var BasicEnemy = function(x, y, type, size, move, shoot)
-<<<<<<< .mine
-var BasicEnemy = function(x, y, type, size)
-=======
-var BasicEnemy = function(x, y, type, move, shoot)
->>>>>>> .theirs
 {
 	this.x = x;
 	this.y = y;
