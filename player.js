@@ -30,33 +30,33 @@ var Player = function(x, y)
 	this.update = function(dt)
 	{
 		// up
-		if (38 in keysDown && !(40 in keysDown))
+		if (87 in keysDown && !(83 in keysDown))
 		{
-			if ((37 in keysDown && !(39 in keysDown)) || (39 in keysDown && !(37 in keysDown)))
+			if ((65 in keysDown && !(68 in keysDown)) || (68 in keysDown && !(65 in keysDown)))
 				self.y -= self.speed * dt * 0.7;
 			else
 				self.y -= self.speed * dt;
 		}
 		// down
-		if (40 in keysDown && !(38 in keysDown))
+		if (83 in keysDown && !(87 in keysDown))
 		{
-			if ((37 in keysDown && !(39 in keysDown)) || (39 in keysDown && !(37 in keysDown)))
+			if ((65 in keysDown && !(68 in keysDown)) || (68 in keysDown && !(65 in keysDown)))
 				self.y += self.speed * dt * 0.7;
 			else
 				self.y += self.speed * dt;
 		}
 		// left
-		if (37 in keysDown && !(39 in keysDown))
+		if (65 in keysDown && !(68 in keysDown))
 		{
-			if ((40 in keysDown && !(38 in keysDown)) || (38 in keysDown && !(40 in keysDown)))
+			if ((83 in keysDown && !(87 in keysDown)) || (87 in keysDown && !(83 in keysDown)))
 				self.x -= self.speed * dt * 0.7;
 			else
 				self.x -= self.speed * dt;
 		}
 		// right
-		if (39 in keysDown && !(37 in keysDown))
+		if (68 in keysDown && !(65 in keysDown))
 		{
-			if ((40 in keysDown && !(38 in keysDown)) || (38 in keysDown && !(40 in keysDown)))
+			if ((83 in keysDown && !(87 in keysDown)) || (87 in keysDown && !(83 in keysDown)))
 				self.x += self.speed * dt * 0.7;
 			else
 				self.x += self.speed * dt;			
@@ -64,7 +64,7 @@ var Player = function(x, y)
 	
 		if (self.bullettimer < 0)
 		{
-			self.bullettimer = (self.type == 1? 30 : 60);
+			self.bullettimer = (self.type == 1? 70 : 50);
 			bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, (self.type == 1? -0.6 : -0.4), "big_p_bullet.png", 2, true)); 
 			if (self.type == 0)
 			{
@@ -110,7 +110,7 @@ var Player = function(x, y)
 	{
 		switch(self.type)
 		{
-		case 0: self.speed = 0.2; break;
+		case 0: self.speed = 0.12; break;
 		case 1: self.speed = 0.3; break;
 		}
 	}
