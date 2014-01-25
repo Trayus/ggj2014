@@ -1,4 +1,9 @@
+var BasicEnemy = function(x, y, type, size, move, shoot)
+<<<<<<< .mine
 var BasicEnemy = function(x, y, type, size)
+=======
+var BasicEnemy = function(x, y, type, move, shoot)
+>>>>>>> .theirs
 {
 	this.x = x;
 	this.y = y;
@@ -8,6 +13,8 @@ var BasicEnemy = function(x, y, type, size)
 	this.health = 30; 
 	this.speed = 1;
 	this.type = type;
+	this.move = move;
+	this.shoot = shoot;
 	this.aship_im = new Image();
 	this.aship_im.src = "enemya_" + size + ".png";
 	this.bship_im = new Image();
@@ -16,13 +23,8 @@ var BasicEnemy = function(x, y, type, size)
 	
 	this.update = function(dt)
 	{
-		if (self.timer % 100 === 0 && self.type === 0) {
-			bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
-		}
-		if (self.timer % 200 === 0) {
-			bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
-		}
-		self.y += self.speed;
+		self.shoot(self);
+		self.move(self);
 		self.timer++;
 	}
 	
