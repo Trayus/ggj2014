@@ -113,9 +113,8 @@ function update(dt)
 	}
 	else // game
 	{
-		if (timer % 100 == 0) {
-		    enemies.push(new BasicEnemy(Math.random() * 500, -50, 0));
-		}
+		spawnEnemies(timer);
+		
 		player.update(dt);
 		for (i = 0; i < bullets.length; i++)
 		{
@@ -129,6 +128,25 @@ function update(dt)
 		collisionVSenemies();
 		cleanbullets();
 		timer++;
+	}
+}
+
+function spawnEnemies(timer) {
+	var twoSecShoot = function(me) {
+		if (me.timer % 100 === 0 && me.type === 0) {
+			bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+		}
+		if (self.timer % 200 === 0) {
+			bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+		}
+	}
+	var sinXMove = function(me) {
+		me.y += me.speed;
+		me.x += Math.sin(me.timer/50);
+	}
+	
+	if (timer % 50 == 0) {
+		enemies.push(new BasicEnemy(Math.random() * 550, 50, player.type, sinXMove, twoSecShoot));
 	}
 }
 
