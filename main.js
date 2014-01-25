@@ -11,6 +11,9 @@ var bg_image, menu_image;
 
 var player;
 var bullets = new Array();
+var enemies = new Array();
+var timer = 0;
+
 
 function loadGame()
 {
@@ -48,11 +51,19 @@ function update(dt)
 	}
 	else // game
 	{
+		if (timer % 100 == 0) {
+		    enemies.push(new BasicEnemy(Math.random() * 500, -50, 0));
+		}
 		player.update(dt);
 		for (i = 0; i < bullets.length; i++)
 		{
 			bullets[i].update(dt);
 		}
+		for (i = 0; i < enemies.length; i++)
+		{
+			enemies[i].update(dt);
+		}
+		timer++;
 	}
 }
 
@@ -77,6 +88,10 @@ function draw()
 		for (i = 0; i < bullets.length; i++)
 		{
 			bullets[i].draw(ctx);
+		}
+		for (i = 0; i < enemies.length; i++)
+		{
+			enemies[i].draw(ctx);
 		}
 	}
 }

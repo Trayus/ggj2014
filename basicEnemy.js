@@ -1,26 +1,28 @@
 var BasicEnemy = function(x, y, type)
 {
-	this.health = 3;
 	this.x = x;
 	this.y = y;
+	this.xoff = 30;
+	this.yoff = 8;
 	this.timer = 0;
-	this.speed = 2.0;
+	this.health = 3; 
+	this.speed = 1;
 	this.type = type;
 	this.aship_im = new Image();
 	this.aship_im.src = "playera.png";
 	this.bship_im = new Image();
 	this.bship_im.src = "playerb.png";
-	this.timer = 0;
 	var self = this;
 	
 	this.update = function(dt)
 	{
-		if (self.timer % 25 && self.type == 0) {
-		  //shoot
+		if (self.timer % 100 === 0 && self.type === 0) {
+		  bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, .2, "big_p_bullet.png", false));
 		}
-		if (self.timer % 50) {
-		  //shoot
+		if (self.timer % 200 === 0) {
+		  bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, .2, "big_p_bullet.png", false));
 		}
+		self.y += self.speed;
 		self.timer++;
 	}
 	
@@ -28,8 +30,10 @@ var BasicEnemy = function(x, y, type)
 	{
 		switch(self.type)
 		{
-		case 0: self.speed = 2; break;
-		case 1: self.speed = 3; break;
+			case 0: self.speed = 2; 
+			break;
+			case 1: self.speed = 3; 
+			break;
 		}
 	}
 	

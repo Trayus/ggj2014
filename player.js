@@ -65,15 +65,15 @@ var Player = function(x, y)
 		if (self.bullettimer < 0)
 		{
 			self.bullettimer = 50;
-			bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, -0.4, "small_p_bullet.png", true)); 
+			bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, -0.4, "big_p_bullet.png", true)); 
 			if (self.type == 0)
 			{
-				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, -0.4, "big_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, 0, -0.4, "big_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, 0, -0.4, "big_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0, -0.4, "big_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0, -0.4, "big_p_bullet.png", true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0, -0.4, "big_p_bullet.png", true)); 				
+				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", true)); 				
 			}
 		}
 		else
