@@ -27,10 +27,18 @@ var fourSecShoot = function(me) {
 }
 var twoSecShoot = function(me) {
 	if (me.timer % 50 === 0 && me.type === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .4, "big_p_bullet.png", 1, false));
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
 	}
 	if (self.timer % 100 === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .4, "big_p_bullet.png", 1, false));
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+	}
+}
+var sideTwoSecShoot = function(me) {
+	if (me.timer % 50 === 0 && me.type === 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.4, 0, "big_p_bullet.png", 1, false));
+	}
+	if (self.timer % 100 === 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.4, 0, "big_p_bullet.png", 1, false));
 	}
 }
 //moving functions
@@ -198,7 +206,6 @@ function update(dt)
 function spawnEnemies(timer) {
 	for (i = 0; i < spawnTime.length; i++) 
 	{
-		console.log(spawnTime[i].time + " " + timer);
 		if (spawnTime[i].time == timer)
 		{
 			enemies.push(spawnTime[i].enemy);
