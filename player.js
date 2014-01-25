@@ -6,13 +6,14 @@ var Player = function(x, y)
 	this.sx = x;
 	this.sy = y;
 	this.speed = 2.0;
-	this.base_im = new Image();
-	this.base_im.src = "playercore.png";
+	this.type = 0;
 	this.aship_im = new Image();
 	this.aship_im.src = "playera.png";
 	this.bship_im = new Image();
-	this.bship.src = "playerb.png";
+	this.bship_im.src = "playerb.png";
 	var self = this;
+
+	var swap = false;
 	
 	this.reset = function()
 	{
@@ -57,10 +58,44 @@ var Player = function(x, y)
 			else
 				self.x += self.speed;			
 		}
+	
+		
+		if (81 in keysDown && !swap)
+		{
+			self.type += 1;
+			self.type %= 2;
+			swap = true;
+			self.shipSettings();
+		}
+		if (87 in keysDown)
+		{
+			//shoot
+		}
+		if (69 in keysDown && !swap)
+		{			
+			self.type -= 1;
+			if (self.type < 0) self.type = 1;
+			swap = true;
+			self.shipSettings();
+		}
+		if (!(81 in keysDown) && !(69 in keysDown))
+			swap = false;
+	}
+	
+	this.shipSettings = function()
+	{
+		switch(self.type)
+		{
+		case 0: self.speed = 2; break;
+		case 1: self.speed = 3; break;
+		}
 	}
 	
 	this.draw = function(ctx)
 	{
-		ctx.drawImage(self.base_im, self.x, self.y);
+		if (self.type == 0)
+			ctx.drawImage(self.aship_im, (self.x - 10) - (self.x % 1), self.y - (self.y % 1));
+		else
+			ctx.drawImage(self.bship_im, self.x - (self.x % 1), self.y - (self.y % 1));
 	}
 }

@@ -58,7 +58,7 @@ function draw()
 	ctx.stroke();
 	if (gamestate == MENU)
 	{
-		ctx.drawImage(menu _image, 0, 0);
+		ctx.drawImage(menu_image, 0, 0);
 		
 	}
 	else if (gamestate == GAMEOVER)
