@@ -1294,26 +1294,6 @@ var aud = new function()
 		var d = self.pattern.length + 3;		
 		
 		var wf = Math.floor(self.random.next() * 3);
-		/*var twf1 = Math.floor(self.random.next() * 2); 
-		var twf2 = Math.floor(self.random.next() * 3); 
-		var twf3 = Math.floor(self.random.next() * 2); 
-		var wf;
-		if (n_instr == 0)
-		{
-			if (twf1 == 0) wf = aud_waves.Square;
-			else wf = aud_waves.Saw;
-		}
-		else if (n_instr == 1)
-		{
-			if (twf2 == 0) wf = aud_waves.Square;
-			else if (twf2 == 2) wf = aud_waves.Saw;
-			else wf = aud_waves.Tri;
-		}
-		else
-		{
-			if (n_instr == 3) wf = aud_waves.Saw;
-			else wf = aud_waves.Tri;
-		}*/	
 		
 		// three melodic instruments
 		var v = 0.7 + 0.2 * energy;
@@ -1341,7 +1321,6 @@ var aud = new function()
 			{
 				var ndxpos = fwd_arr[p][n_instr] * patlen * 32;
 				var pos = p * patlen * 32;
-				console.log(p + ", " + n_instr + ": " + pos + " " + ndxpos);
 				for ( ; pos < (p + 1) * 32 * patlen; pos++, ndxpos++)
 				{
 					self.pattern[a].pattern[pos] = self.pattern[a].pattern[ndxpos];
@@ -1868,20 +1847,13 @@ var aud = new function()
 			else
 				transitions.push("high");
 		}
-		console.log("base note (C = 0) is " + base_note % 12);
-		console.log("transitions: ");
-		console.log(transitions);
 		
 		new rng(self.aud_seed);
-		console.log("instr arr: ");
 		var instr_arr = new Array();
 		populate_instr(energy, self.aud_pat, instr_arr);
-		console.log(instr_arr);
 		
 		new rng(self.aud_seed);
-		console.log("fwd arr: ");
 		var fwd_arr = populate_fwd(instr_arr, self.aud_pat);
-		console.log(fwd_arr);
 		
 		// reset RNG for pattern-length independence
 		new rng(self.aud_seed);
@@ -1893,11 +1865,6 @@ var aud = new function()
 		var Jmap = self.createJMap(stress, energy);
 		var Fmap = self.createFMap(stress, energy);
 		var Pmap = self.createPMap(stress, energy);
-		console.log("Join Map: ");
-		console.log(Jmap);
-		console.log("Follow Map: ");
-		console.log(Fmap);
-		console.log("Prevalence Table: " + Pmap);
 			
 		// reset RNG for pattern-length independence
 		new rng(self.aud_seed);
