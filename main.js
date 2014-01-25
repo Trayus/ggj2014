@@ -46,19 +46,16 @@ var CircleMove = function(me) {
 	me.x += Math.sin(me.timer/20) * 5;
 }
 
+var spawn = function(time, enemy) {
+	this.time = time;
+	this.enemy = enemy;
+}
 
 var spawnTime = new Array();
 spawnTime[0] = new spawn(100, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
 spawnTime[1] = new spawn(200, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
 spawnTime[2] = new spawn(300, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
 spawnTime[3] = new spawn(400, new BasicEnemy(150, -20, player.type, "small", CircleMove, twoSecShoot));
-
-var spawn = function(time, enemy) {
-	this.time = time;
-	this.enemy = enemy;
-}
-
-
 
 function loadGame()
 {
