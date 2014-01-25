@@ -15,6 +15,9 @@ var bullets = new Array();
 var enemies = new Array();
 var timer = 0;
 var scroll = 0, scroll2 = 200;
+var tick = 0;
+
+aud.ontick = function() { tick++; };
 
 //shooting functions
 var fourSecShoot = function(me) {
@@ -175,6 +178,7 @@ function update(dt)
 			gamestate = GAME;
 			aud.generatepattern(0.8, 0.8, 8, 2, 9999);
 			aud.playstop();
+			tick = 0;	
 		}
 	}
 	else if (gamestate == GAMEOVER)
@@ -184,6 +188,7 @@ function update(dt)
 	else // game
 	{
 		spawnEnemies(timer);
+		//console.log(tick);
 		
 		player.update(dt);
 		for (i = 0; i < bullets.length; i++)
