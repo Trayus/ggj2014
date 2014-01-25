@@ -73,10 +73,6 @@ spawnTime.push(new spawn(200, new BasicEnemy(450, -20, 0, "small", CCircleMove, 
 spawnTime.push(new spawn(300, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 spawnTime.push(new spawn(400, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 
-
-
-
-
 function loadGame()
 {
 	ctx = document.getElementById("canvas").getContext('2d');
@@ -89,6 +85,9 @@ function loadGame()
 	gameover_image = new Image(); gameover_image.src = "gameover.png";
 	healthbar = new Image(); healthbar.src = "life.png";
 	heart = new Image(); heart.src = "heart.png";
+	
+	aud.generatepattern(0.1, 0.8, 8, 2, 231232);
+	aud.playstop();
 	
 	gameLoop();
 }
@@ -108,6 +107,8 @@ function collisionVSplayer()
 		if (!bullets[i].playerbullet && player.hitbox().hits(bullets[i].hitbox()))
 		{		
 			player.reset();
+			aud.playstop();
+			aud.playstop();
 			bullets = new Array();
 			enemies = new Array();
 		}
@@ -117,6 +118,8 @@ function collisionVSplayer()
 		if (player.hitbox().hits(enemies[i].hitbox()))
 		{		
 			player.reset();
+			aud.playstop();
+			aud.playstop();
 			bullets = new Array();
 			enemies = new Array();
 		}
@@ -124,7 +127,9 @@ function collisionVSplayer()
 	
 	if (player.lives <= 0)
 	{
-		gamestate = GAMEOVER
+		gamestate = GAMEOVER;
+		aud.generatepattern(0.9, 0.2, 5, 1, 8745);
+		aud.playstop();
 	}
 }
 function collisionVSenemies()
@@ -168,6 +173,8 @@ function update(dt)
 		{
 			player = new Player(240, 500);
 			gamestate = GAME;
+			aud.generatepattern(0.8, 0.8, 8, 2, 9999);
+			aud.playstop();
 		}
 	}
 	else if (gamestate == GAMEOVER)
@@ -199,9 +206,6 @@ function update(dt)
 			scroll2 -= 600;
 	}
 }
-
-
-
 
 function spawnEnemies(timer) {
 	for (i = 0; i < spawnTime.length; i++) 
