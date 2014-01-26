@@ -55,6 +55,7 @@ var player;
 var bullets = new Array();
 var enemies = new Array();
 var timer = 0;
+var dtime = 0;
 var scroll = 0, scroll2 = 200;
 var tick = 0;
 var bossOut = false;
@@ -395,6 +396,7 @@ function gameLoop()
 
 function reset()
 {
+	dtime = 0;
 	player.reset();
 	aud.generatepattern(0.8, 0.8, 8, 2, 99999);
 	aud.playstop();
@@ -431,7 +433,8 @@ function collisionVSplayer()
 	}
 	if (res)
 	{
-		reset();
+		//reset();
+		dtime = 1;
 	}
 	else if (player.lives <= 0)
 	{
@@ -509,10 +512,8 @@ function cleanbullets()
 
 function addspawns()
 {
-	
 	spawnTime = new Array();
 
-	
 	spawnTime.push(new spawn(24, new BasicEnemy(0, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(32, new BasicEnemy(0, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(40, new BasicEnemy(0, -20, 0, "small", CircleMove, twoSecShoot)));
@@ -572,7 +573,7 @@ function update(dt)
 	{
 		// nada
 	}
-	else // game
+	else if (dtime == 0)// game
 	{
 		spawnEnemies(timer);
 		player.update(dt);
@@ -605,6 +606,12 @@ function update(dt)
 			scroll -= 600;
 		if (scroll2 > 600)
 			scroll2 -= 600;
+	}
+	else
+	{
+		dtime += 10;
+		if (dtime > 600)
+			reset();
 	}
 }
 
@@ -681,5 +688,10 @@ function draw()
 			ctx.drawImage(heart, 10 + 4 + 16, 10 + 4);
 		if (player.lives > 2)
 			ctx.drawImage(heart, 10 + 4 + 16 * 2, 10 + 4);
+			
+		
+		ctx.fillStyle = 'rgba(0,0,0,0.8)';
+		ctx.fillRect(0,0, 500, dtime);
+		ctx.stroke();
 	}
 }
