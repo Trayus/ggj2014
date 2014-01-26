@@ -8,6 +8,7 @@ var menuoption = 0;
 /** global images **/
 var bg_image, menu_image, gameover_image;
 var healthbar, heart, gamebg, gamebg2;
+var shipselect, ships;
 /** end images **/
 
 var player;
@@ -73,6 +74,8 @@ function loadGame()
 	gameover_image = new Image(); gameover_image.src = "gameover.png";
 	healthbar = new Image(); healthbar.src = "life.png";
 	heart = new Image(); heart.src = "heart.png";
+	shipselect = new Image(); shipselect.src = "shipselect.png";
+	ships = new Image(); ships.src = "ships.png";
 	
 	aud.generatepattern(0.1, 0.8, 8, 2, 231232);
 	aud.playstop();
@@ -185,7 +188,7 @@ function update(dt)
 		{
 			player = new Player(240, 500);
 			gamestate = GAME;
-			aud.generatepattern(0.8, 0.8, 8, 2, 9999);
+			aud.generatepattern(0.8, 0.8, 8, 2, 99999);
 			aud.playstop();
 			tick = 0;	
 			addspawns();
@@ -213,6 +216,17 @@ function update(dt)
 		collisionVSenemies();
 		cleanbullets();
 		timer++;
+		
+		for (i = 0; i < particles.length; i++)
+		{
+			particles[i].update(dt);
+			if (particles[i].time == 0)
+			{
+				particles.splice(i, 1);
+				i--;
+			}
+		}
+		
 		scroll += 0.3;
 		scroll2 += 0.5;
 		if (scroll > 600)
@@ -263,6 +277,13 @@ function draw()
 		{
 			enemies[i].draw(ctx);
 		}
+		for (i = 0; i < particles.length; i++)
+		{
+			particles[i].draw(ctx);
+		}
+		
+		ctx.drawImage(ships, 10, 40);
+		ctx.drawImage(shipselect, 10 + 4 + 16 * player.type, 40 + 4);
 		
 		ctx.drawImage(healthbar, 10, 10);
 		ctx.drawImage(heart, 10 + 4, 10 + 4);
@@ -270,7 +291,5 @@ function draw()
 			ctx.drawImage(heart, 10 + 4 + 16, 10 + 4);
 		if (player.lives > 2)
 			ctx.drawImage(heart, 10 + 4 + 16 * 2, 10 + 4);
-			
-		
 	}
 }

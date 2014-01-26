@@ -63,6 +63,11 @@ var Player = function(x, y)
 			else
 				self.x += self.speed * dt;			
 		}
+		
+		if (self.x < -10) self.x = -10;
+		if (self.x > 480) self.x = 480;
+		if (self.y < -10) self.y = -10;
+		if (self.y > 580) self.y = 580;
 	
 		if (self.bullettimer < 0)
 		{
@@ -86,16 +91,22 @@ var Player = function(x, y)
 		}
 		else
 			self.bullettimer-=dt;
-				
 		
-		if (81 in keysDown && !swap)
+		particles.push(new Particle(self.x + self.xoff, self.y + 20, Math.random() * 0.1 - 0.05, 0.2, 30));
+		if (self.type == 1)
+		{
+			particles.push(new Particle(self.x + self.xoff + 12, self.y + 18, Math.random() * 0.1 - 0.05, 0.2, 30));
+			particles.push(new Particle(self.x + self.xoff - 12, self.y + 18, Math.random() * 0.1 - 0.05, 0.2, 30));
+		}
+		
+		if (69 in keysDown && !swap)
 		{
 			self.type += 1;
 			self.type %= 3;
 			swap = true;
 			self.shipSettings();
 		}
-		if (69 in keysDown && !swap)
+		if (81 in keysDown && !swap)
 		{			
 			self.type -= 1;
 			if (self.type < 0) self.type = 2;
