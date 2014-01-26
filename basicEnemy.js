@@ -11,7 +11,6 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	this.health = 20 * this.size; 
 	this.type = type;
 	this.speed = 1;
-	console.log(this.speed);
 	this.move = move;
 	this.shoot = shoot;
 	this.aship_im = new Image();

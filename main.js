@@ -26,39 +26,57 @@ aud.ontick = function() {
 //shooting functions
 var twoSecShoot = function(me) {
 	if (tick % 8 === 0 && me.shot) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+		if (me.type != 0) {
+			bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+			bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+		}
+		else {
+			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+		}
 		me.shot = false;
 	}
 	if (tick % 2 === 1) {
 		me.shot = true;
 	}
 	if (tick % 8 === 4 && me.shot) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
+		if (me.type != 0)
+		bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, 0, .2, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
+		else
+		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0, .2, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
 		me.shot = false;
 	}
 	if (tick % 2 === 0 && me.shot && me.type == 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
 		me.shot = false;
 	}
 }
 var threeSecShoot = function(me) {
 	if (tick % 8 === 0 && me.shot) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+		if (me.type != 0) {
+			bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, 0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+			bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+		}
+		else {
+			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+		}
 		me.shot = false;
 	}
 	if (tick % 2 === 1) {
 		me.shot = true;
 	}
 	if (tick % 8 === 4 && me.shot) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .3, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
+		if (me.type != 0)
+		bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, 0, .3, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
+		else
+		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0, .3, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
 		me.shot = false;
 	}
 	if (tick % 2 === 0 && me.shot && me.type == 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
+		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
 		me.shot = false;
 	}
 }
@@ -443,18 +461,12 @@ function update(dt)
 			aud.playstop();
 			tick = 0;	
 			addspawns();
-			enemies.push(new BasicEnemy(50, 50, 0, "small", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(50, 100, 0, "medium", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(50, 200, 0, "large", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(150, 50, 1, "small", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(150, 100, 1, "medium", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(150, 200, 1, "large", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(250, 50, 2, "small", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(250, 100, 2, "medium", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(250, 200, 2, "large", noMove, twoSecShoot));
+			enemies.push(new BasicEnemy(0, 50, 0, "small", noMove, twoSecShoot));
+			enemies.push(new BasicEnemy(0, 100, 0, "medium", noMove, twoSecShoot));
+			enemies.push(new BasicEnemy(0, 200, 0, "large", noMove, twoSecShoot));
 		}
 	}
-	else if (gamestate == GAMEOVER)
+	else if (gamestate == GAMEOVER || gamestate == VICTORY)
 	{
 		// nada
 	}
@@ -509,6 +521,9 @@ function spawnEnemies(timer) {
 		bossOut = true;
 	}
 	if (tick > 400 && bossOut && enemies.length==0) { 
+		aud.generatepattern(0.0, 0.9, 8, 2, 99999);
+		aud.playstop();
+		bossOut = false;
 		gamestate = VICTORY;
 	}
 }
