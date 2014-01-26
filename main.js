@@ -361,6 +361,10 @@ function collisionVSenemies()
 			}
 		}
 		if (enemies[i].health < 0)
+		{	
+			enemies[i].die();
+		}
+		if (enemies[i].fracture_time > 40)
 		{
 			enemies.splice(i, 1);
 			i--;
