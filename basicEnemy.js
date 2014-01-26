@@ -6,7 +6,7 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	this.yoff = 8;
 	this.timer = 0;
 	this.speed = 1;
-	this.size = (size == "small"? 1 : (size == "medium")? 2 : 4);
+	this.size = (size == "small"? 1 : (size == "medium")? 2 : 3);
 	this.health = 30 * this.size; 
 	this.type = type;
 	this.move = move;
@@ -18,6 +18,7 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	this.cship_im = new Image();
 	this.cship_im.src = "enemyc_" + size + ".png";
 	var self = this;
+	var shot = true;
 	
 	this.update = function(dt)
 	{
