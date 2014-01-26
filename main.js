@@ -17,6 +17,7 @@ var enemies = new Array();
 var timer = 0;
 var scroll = 0, scroll2 = 200;
 var tick = 0;
+var bossOut = false;
 
 aud.ontick = function() {
 	tick++; 
@@ -32,19 +33,133 @@ var twoSecShoot = function(me) {
 	if (tick % 2 === 1) {
 		me.shot = true;
 	}
-	if (tick % 4 === 0 && me.shot) {
+	if (tick % 8 === 4 && me.shot) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ (me.size + 1) +".png", 2, false));
 		me.shot = false;
 	}
 	if (tick % 2 === 0 && me.shot && me.type == 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ me.size +".png", 1, false));
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet"+ me.size +".png", 1, false));
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet"+ me.size +".png", 1, false));
 		me.shot = false;
 	}
 }
 var noShoot = function(me) {
 	//nothing
 }
+var bossShoot = function(me) {
+	if (tick % 8 == 4 && me.homeshot) {
+		bullets.push(new Bullet(me.x + 20, me.y + 50, 
+			-Math.cos(Math.atan2((me.y + 50) - (player.y + 10), (me.x + 20) - (player.x + 20)))/10, 
+			-Math.sin(Math.atan2((me.y + 50) - (player.y + 10), (me.x + 20) - (player.x + 20)))/10, 
+			"e_bullet1.png", 1, false));
+		bullets.push(new Bullet(me.x + 190, me.y + 50, 
+			-Math.cos(Math.atan2((me.y + 50) - (player.y + 10), (me.x + 190) - (player.x + 20)))/10, 
+			-Math.sin(Math.atan2((me.y + 50) - (player.y + 10), (me.x + 190) - (player.x + 20)))/10, 
+			"e_bullet1.png", 1, false));
+		me.homeshot = false;
+	}
+	if (tick % 4 == 1) {
+		me.homeshot = true;
+	}
+	if (tick % 16 == 0 && me.mcshot) {
+		bullets.push(new Bullet(me.x + 96, me.y + 60, 0, .4, "e_bullet4.png", 2, false));
+		me.mcshot = false;
+	}
+	if (tick % 16 == 1) {
+		me.mcshot = true;
+	}
+	if (me.type < 2) {
+		if (tick % 32 == 16 && me.altshot) {
+			bullets.push(new Bullet(me.x + 76, me.y + 60, 0, .3, "e_bullet3.png", 2, false));
+			bullets.push(new Bullet(me.x + 116, me.y + 60, 0, .3, "e_bullet3.png", 2, false));
+			me.altshot = false;
+		}
+		if (tick % 32 == 8 && me.altshot && me.type == 0) {
+			bullets.push(new Bullet(me.x + 86, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 106, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
+			me.altshot = false;
+		}
+		if (tick % 32 == 24 && me.altshot && me.type == 0) {
+			bullets.push(new Bullet(me.x + 86, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 106, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
+			me.altshot = false;
+		}
+		if (tick % 2 == 1) {
+			me.altshot = true;
+		}
+	}
+	
+	// wing rounds
+	if (tick % 2 == 1) {
+		me.wingshot = true;
+	}
+	if (me.wingType == 2) {
+		if (tick % 32 == 0 && me.wingshot) {
+			bullets.push(new Bullet(me.x + 56, me.y + 60, 0, .3, "e_bullet2.png", 2, false));
+			bullets.push(new Bullet(me.x + 136, me.y + 60, 0, .3, "e_bullet2.png", 2, false));
+			me.wingshot = false;
+		}
+		if (tick % 32 == 4 && me.wingshot) {
+			bullets.push(new Bullet(me.x + 56, me.y + 60, 0.1, .3, "e_bullet2.png", 2, false));
+			bullets.push(new Bullet(me.x + 136, me.y + 60, 0.1, .3, "e_bullet2.png", 2, false));
+			me.wingshot = false;
+		}
+		if (tick % 32 == 8 && me.wingshot) {
+			bullets.push(new Bullet(me.x + 56, me.y + 60, -0.1, .3, "e_bullet2.png", 2, false));
+			bullets.push(new Bullet(me.x + 136, me.y + 60, -0.1, .3, "e_bullet2.png", 2, false));
+			me.wingshot = false;
+		}
+		if (tick % 32 == 12 && me.wingshot) {
+			bullets.push(new Bullet(me.x + 56, me.y + 60, 0.2, .3, "e_bullet2.png", 2, false));
+			bullets.push(new Bullet(me.x + 136, me.y + 60, 0.2, .3, "e_bullet2.png", 2, false));
+			me.wingshot = false;
+		}
+		if (tick % 32 == 16 && me.wingshot) {
+			bullets.push(new Bullet(me.x + 56, me.y + 60, -0.2, .3, "e_bullet2.png", 2, false));
+			bullets.push(new Bullet(me.x + 136, me.y + 60, -0.2, .3, "e_bullet2.png", 2, false));
+			me.wingshot = false;
+		}
+	}
+	if (me.wingType == 1) {
+		if (tick % 96 == 0 && me.wingshot) {
+			enemies.push(new BasicEnemy(me.x + 146, me.y, 1, "small", CircleMove, twoSecShoot));
+			enemies.push(new BasicEnemy(me.x + 46, me.y, 1, "small", CCircleMove, twoSecShoot));
+			me.wingshot = false;
+		}
+		if (tick % 96 == 64 && me.wingshot) {
+			enemies.push(new BasicEnemy(me.x + 146, me.y, 0, "small", CircleMove, twoSecShoot));
+			enemies.push(new BasicEnemy(me.x + 46, me.y, 0, "small", CCircleMove, twoSecShoot));
+			me.wingshot = false;
+		}
+	}
+	if (me.wingType == 0) {
+		if (tick % 16 == 8 && me.wingshot) {
+			bullets.push(new Bullet(me.x + 8, me.y + 60, -0.15, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 184, me.y + 60, 0.15, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 20, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 172, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 32, me.y + 60, 0, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 160, me.y + 60, 0, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 44, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
+			bullets.push(new Bullet(me.x + 148, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
+			me.wingshot = false;
+		}
+	}
+}
 //moving functions
+var bossMove = function(me) {
+	if (me.timer < 100) {
+		me.y += 1.5;
+	}
+	else {
+		if ((me.timer % 200) < 100) {
+			me.x -= 4;
+		}
+		else {
+			me.x += 4;
+		}
+	}
+}
 var sinXMove = function(me) {
 	me.y += me.speed * 2;
 	me.x += Math.sin(me.timer/50);
@@ -60,11 +175,11 @@ var fastYMove = function(me) {
 
 var CircleMove = function(me) {
 	me.y += Math.cos(me.timer/20) * 5 + me.speed;
-	me.x += Math.sin(me.timer/20) * 5;
+	me.x += Math.sin(me.timer/20) * 4;
 }
 var CCircleMove = function(me) {
 	me.y += Math.cos(me.timer/20) * 5 + me.speed;
-	me.x -= Math.sin(me.timer/20) * 5;
+	me.x -= Math.sin(me.timer/20) * 4;
 }
 
 var StrafeMove = function(me) {
@@ -167,11 +282,31 @@ function collisionVSenemies()
 		for (j = 0; j < bullets.length; j++)
 		{
 			if (bullets[j].playerbullet && enemies[i].hitbox().hits(bullets[j].hitbox()))
-			{		
-				if (enemies[i].type == 2)
-					enemies[i].health -= (bullets[j].damage - 1);
-				else
-					enemies[i].health -= bullets[j].damage;
+			{
+				if (enemies[i].boss == false) {
+					if (enemies[i].type == 2)
+						enemies[i].health -= (bullets[j].damage - 1);
+					else
+						enemies[i].health -= bullets[j].damage;
+				}
+				else {
+					if (enemies[i].type == 2) {
+						if (enemies[i].wingType == 2) {
+							enemies[i].health -= (bullets[j].damage - 3);
+						}
+						else {
+							enemies[i].health -= (bullets[j].damage - 1);
+						}
+					}
+					else {
+						if (enemies[i].wingType == 2) {
+							enemies[i].health -= (bullets[j].damage - 2);
+						}
+						else {
+							enemies[i].health -= (bullets[j].damage);
+						}
+					}
+				}
 				bullets.splice(j, 1);
 				j--;
 			}
@@ -198,14 +333,15 @@ function cleanbullets()
 
 function addspawns()
 {
+	
 	spawnTime = new Array();
-	spawnTime.push(new spawn(8, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(16, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(24, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(8, new BasicEnemy(0, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(16, new BasicEnemy(0, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(24, new BasicEnemy(0, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(8, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(16, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(24, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(48, new BasicEnemy(100, -20, 0, "large", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(48, new BasicEnemy(0, -20, 0, "large", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(48, new BasicEnemy(450, -20, 0, "large", CCircleMove, twoSecShoot)));
 	
 	spawnTime.push(new spawn(180, new BasicEnemy(0, -20, 0, "small", fastYMove, noShoot)));
@@ -261,7 +397,6 @@ function update(dt)
 	else // game
 	{
 		spawnEnemies(timer);
-		
 		player.update(dt);
 		for (i = 0; i < bullets.length; i++)
 		{
@@ -304,6 +439,10 @@ function spawnEnemies(timer) {
 			enemies[enemies.length - 1].type = player.type;
 			spawnTime[i].fresh = false;
 		}
+	}
+	if (tick > 400 && bossOut == false && enemies.length==0) { 
+		enemies.push(new Boss(-50, -150, player.type, bossMove, bossShoot));
+		bossOut = true;
 	}
 }
 
