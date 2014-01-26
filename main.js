@@ -10,6 +10,46 @@ var bg_image, menu_image, gameover_image;
 var healthbar, heart, gamebg, gamebg2;
 var shipselect, ships;
 /** end images **/
+/** global sound **/
+var sa1 = new Audio('shotA1.wav');
+var sa2 = new Audio('shotA2.wav');
+var sa3 = new Audio('shotA3.wav');
+var sb1 = new Audio('shotB1.wav');
+var sb2 = new Audio('shotB2.wav');
+var sb3 = new Audio('shotB3.wav');
+var sc1 = new Audio('shotC1.wav');
+var sc2 = new Audio('shotC2.wav');
+var sc3 = new Audio('shotC3.wav');
+var ex = new Audio('explode.wav');
+var eex = new Audio('enemyexplode.wav');
+var ehit1 = new Audio('hitenemy.wav');
+var ehit2 = new Audio('hitenemy.wav');
+var ehit3 = new Audio('hitenemy.wav');
+var ehit4 = new Audio('hitenemy.wav');
+var swaps = new Audio('swap.wav');
+var pa1 = new Audio('pshot1.wav');
+var pa2 = new Audio('pshot2.wav');
+var pa3 = new Audio('pshot3.wav');
+var pa4 = new Audio('pshot1.wav');
+var pa5 = new Audio('pshot2.wav');
+var pa6 = new Audio('pshot3.wav');
+var pb1 = new Audio('pshotB1.wav');
+var pb2 = new Audio('pshotB2.wav');
+var pb3 = new Audio('pshotB3.wav');
+var pb4 = new Audio('pshotB4.wav');
+var pb5 = new Audio('pshotB1.wav');
+var pb6 = new Audio('pshotB2.wav');
+var pb7 = new Audio('pshotB3.wav');
+var pb8 = new Audio('pshotB4.wav');
+var pb9 = new Audio('pshotB1.wav');
+var pb10 = new Audio('pshotB2.wav');
+var pb11 = new Audio('pshotB3.wav');
+var pb12 = new Audio('pshotB4.wav');
+var pb13 = new Audio('pshotB1.wav');
+var pb14 = new Audio('pshotB2.wav');
+var pb15 = new Audio('pshotB3.wav');
+var pb16 = new Audio('pshotB4.wav');
+/** end sound **/
 
 var player;
 var bullets = new Array();
@@ -29,10 +69,18 @@ var twoSecShoot = function(me) {
 		if (me.type != 0) {
 			bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
 			bullets.push(new Bullet(me.x + 18 * me.graphicSize, me.y + 28 * me.graphicSize, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+			if (me.size >= 2)
+				switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+			else
+				switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 		}
 		else {
 			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
 			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
+			if (me.size >= 2)
+				switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+			else
+				switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 		}
 		me.shot = false;
 	}
@@ -45,11 +93,19 @@ var twoSecShoot = function(me) {
 		else
 		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0, .2, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 	if (tick % 2 === 0 && me.shot && me.type == 0) {
 		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
 		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .2, "e_bullet"+ me.size +".png", me.size, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 }
 var threeSecShoot = function(me) {
@@ -63,6 +119,10 @@ var threeSecShoot = function(me) {
 			bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
 		}
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 	if (tick % 2 === 1) {
 		me.shot = true;
@@ -73,11 +133,19 @@ var threeSecShoot = function(me) {
 		else
 		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0, .3, "e_bullet"+ (me.size + 1) +".png", me.size + 1, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 	if (tick % 2 === 0 && me.shot && me.type == 0) {
 		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, 0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
 		bullets.push(new Bullet(me.x + 28 * me.graphicSize - 10, me.y + 28 * me.graphicSize, -0.02, .3, "e_bullet"+ me.size +".png", me.size, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 }
 
@@ -86,6 +154,10 @@ var minionShoot = function(me) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet1.png", 1, false));
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet1.png", 1, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 	if (tick % 2 === 1) {
 		me.shot = true;
@@ -93,11 +165,19 @@ var minionShoot = function(me) {
 	if (tick % 8 === 4 && me.shot) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet1.png", 1, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 	if (tick % 2 === 0 && me.shot && me.type == 0) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet1.png", 1, false));
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet1.png", 1, false));
 		me.shot = false;
+		if (me.size >= 2)
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sa1.play(); break; case 1: sa2.play(); break; case 2: sa3.play(); break; }
+		else
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sb1.play(); break; case 1: sb2.play(); break; case 2: sb3.play(); break; }
 	}
 }
 
@@ -115,6 +195,7 @@ var bossShoot = function(me) {
 			-Math.sin(Math.atan2((me.y + 50) - (player.y + 10), (me.x + 190) - (player.x + 20)))/10, 
 			"e_bullet1.png", 1, false));
 		me.homeshot = false;
+		switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 	}
 	if (tick % 4 == 1) {
 		me.homeshot = true;
@@ -122,6 +203,7 @@ var bossShoot = function(me) {
 	if (tick % 16 == 0 && me.mcshot) {
 		bullets.push(new Bullet(me.x + 96, me.y + 60, 0, .4, "e_bullet4.png", 2, false));
 		me.mcshot = false;
+		switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 	}
 	if (tick % 16 == 1) {
 		me.mcshot = true;
@@ -131,16 +213,19 @@ var bossShoot = function(me) {
 			bullets.push(new Bullet(me.x + 76, me.y + 60, 0, .3, "e_bullet3.png", 2, false));
 			bullets.push(new Bullet(me.x + 116, me.y + 60, 0, .3, "e_bullet3.png", 2, false));
 			me.altshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 24 == 8 && me.altshot && me.type == 0) {
 			bullets.push(new Bullet(me.x + 86, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
 			bullets.push(new Bullet(me.x + 106, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
 			me.altshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 24 == 0 && me.altshot && me.type == 0) {
 			bullets.push(new Bullet(me.x + 86, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
 			bullets.push(new Bullet(me.x + 106, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
 			me.altshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 2 == 1) {
 			me.altshot = true;
@@ -156,26 +241,31 @@ var bossShoot = function(me) {
 			bullets.push(new Bullet(me.x + 56, me.y + 60, 0, .3, "e_bullet2.png", 2, false));
 			bullets.push(new Bullet(me.x + 136, me.y + 60, 0, .3, "e_bullet2.png", 2, false));
 			me.wingshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 24 == 4 && me.wingshot) {
 			bullets.push(new Bullet(me.x + 56, me.y + 60, 0.1, .3, "e_bullet2.png", 2, false));
 			bullets.push(new Bullet(me.x + 136, me.y + 60, 0.1, .3, "e_bullet2.png", 2, false));
 			me.wingshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 24 == 8 && me.wingshot) {
 			bullets.push(new Bullet(me.x + 56, me.y + 60, -0.1, .3, "e_bullet2.png", 2, false));
 			bullets.push(new Bullet(me.x + 136, me.y + 60, -0.1, .3, "e_bullet2.png", 2, false));
 			me.wingshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 24 == 12 && me.wingshot) {
 			bullets.push(new Bullet(me.x + 56, me.y + 60, 0.2, .3, "e_bullet2.png", 2, false));
 			bullets.push(new Bullet(me.x + 136, me.y + 60, 0.2, .3, "e_bullet2.png", 2, false));
 			me.wingshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 		if (tick % 24 == 16 && me.wingshot) {
 			bullets.push(new Bullet(me.x + 56, me.y + 60, -0.2, .3, "e_bullet2.png", 2, false));
 			bullets.push(new Bullet(me.x + 136, me.y + 60, -0.2, .3, "e_bullet2.png", 2, false));
 			me.wingshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 	}
 	if (me.wingType == 1) {
@@ -196,6 +286,7 @@ var bossShoot = function(me) {
 			bullets.push(new Bullet(me.x + 44, me.y + 60, 0.1, .3, "e_bullet1.png", 1, false));
 			bullets.push(new Bullet(me.x + 148, me.y + 60, -0.1, .3, "e_bullet1.png", 1, false));
 			me.wingshot = false;
+			switch (Math.floor(Math.random() * 2.99)) { case 0: sc1.play(); break; case 1: sc2.play(); break; case 2: sc3.play(); break; }
 		}
 	}
 }
@@ -304,7 +395,7 @@ function gameLoop()
 function reset()
 {
 	player.reset();
-	aud.playstop();
+	aud.generatepattern(0.8, 0.8, 8, 2, 99999);
 	aud.playstop();
 	bullets = new Array();
 	enemies = new Array();
@@ -314,12 +405,14 @@ function reset()
 
 function collisionVSplayer()
 {
+	var res = false;
 	for (i = 0; i < bullets.length; i++)
 	{
 		if (!bullets[i].playerbullet && player.hitbox().hits(bullets[i].hitbox()))
 		{
 			if (player.type != 2 || bullets[i].damage > 1) {
-				reset();
+				res = true;
+				ex.play();
 			}
 			else {
 				bullets.splice(i, 1);
@@ -331,11 +424,15 @@ function collisionVSplayer()
 	{
 		if (player.hitbox().hits(enemies[i].hitbox()))
 		{		
-			reset();
+			res = true;
+			ex.play();
 		}
 	}
-	
-	if (player.lives <= 0)
+	if (res)
+	{
+		reset();
+	}
+	else if (player.lives <= 0)
 	{
 		gamestate = GAMEOVER;
 		aud.generatepattern(0.9, 0.2, 5, 1, 8745);
@@ -374,6 +471,8 @@ function collisionVSenemies()
 						}
 					}
 				}
+				switch (Math.floor(Math.random() * 3.99)) { case 0: ehit1.play(); break; case 1: ehit3.play(); break; 
+															case 2: ehit2.play(); break; case 3: ehit4.play(); break; }
 				bullets.splice(j, 1);
 				j--;
 			}
@@ -381,6 +480,7 @@ function collisionVSenemies()
 		if (enemies[i].health < 0)
 		{	
 			enemies[i].die();
+			eex.play();
 		}
 		if (enemies[i].fracture_time > 40)
 		{
