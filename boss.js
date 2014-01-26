@@ -7,7 +7,7 @@ var Boss = function(x, y, type, move, shoot)
 	this.yoff = 8;
 	this.timer = 0;
 	this.speed = 1;
-	this.health = 500
+	this.health = 500;
 	this.type = type;
 	this.wingType;
 	this.move = move;
@@ -36,6 +36,7 @@ var Boss = function(x, y, type, move, shoot)
 	var mcshot = true;
 	var wingshot = true;
 	var self = this;
+	this.fracture_time = 0;
 	
 	this.update = function(dt)
 	{
@@ -48,6 +49,11 @@ var Boss = function(x, y, type, move, shoot)
 	this.hitbox = function()
 	{
 		return new Hitbox(self.x, self.y + 6, 210, 80);
+	}
+	
+	this.die = function()
+	{
+		self.fracture_time = 9999999;
 	}
 	
 	this.draw = function(ctx)
