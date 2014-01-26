@@ -384,6 +384,10 @@ function collisionVSenemies()
 		}
 		if (enemies[i].fracture_time > 40)
 		{
+			for (j = 0; j < (50 * enemies[i].graphicSize * enemies[i].graphicSize); j++) {
+				var k = Math.random();
+				particles.push(new Particle(enemies[i].x + 18 * enemies[i].graphicSize, enemies[i].y + 20 * enemies[i].graphicSize, Math.cos((k * 360)) * enemies[i].graphicSize / 5 * Math.random(), Math.sin((k * 360)) * enemies[i].graphicSize / 5 * Math.random(), 40));
+			}
 			enemies.splice(i, 1);
 			i--;
 		}
@@ -551,18 +555,17 @@ function draw()
 		ctx.drawImage(gamebg2, 0, scroll2);
 		ctx.drawImage(gamebg2, 0, scroll2 - 600);
 		player.draw(ctx);
-		
-		for (i = 0; i < bullets.length; i++)
+		for (i = 0; i < particles.length; i++)
 		{
-			bullets[i].draw(ctx);
+			particles[i].draw(ctx);
 		}
 		for (i = 0; i < enemies.length; i++)
 		{
 			enemies[i].draw(ctx);
 		}
-		for (i = 0; i < particles.length; i++)
+		for (i = 0; i < bullets.length; i++)
 		{
-			particles[i].draw(ctx);
+			bullets[i].draw(ctx);
 		}
 		
 		ctx.drawImage(ships, 10, 40);
