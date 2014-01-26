@@ -20,6 +20,7 @@ var tick = 0;
 aud.ontick = function() {
 	tick++; 
 };
+aud.setvolume(0);
 
 //shooting functions
 var twoSecShoot = function(me) {
@@ -32,7 +33,7 @@ var twoSecShoot = function(me) {
 		me.shot = true;
 	}
 	if (tick % 8 === 0 && me.shot) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ me.size +".png", 1, false));
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ (me.size + 1) +".png", 2, false));
 		me.shot = false;
 	}
 }
@@ -93,12 +94,14 @@ function collisionVSplayer()
 	for (i = 0; i < bullets.length; i++)
 	{
 		if (!bullets[i].playerbullet && player.hitbox().hits(bullets[i].hitbox()))
-		{		
-			player.reset();
-			aud.playstop();
-			aud.playstop();
-			bullets = new Array();
-			enemies = new Array();
+		{
+			if (player.type != 2 || bullets[i].damage > 1) {
+				player.reset();
+				aud.playstop();
+				aud.playstop();
+				bullets = new Array();
+				enemies = new Array();
+			}
 		}
 	}
 	for (i = 0; i < enemies.length; i++)
@@ -214,6 +217,7 @@ function spawnEnemies(timer) {
 		if (spawnTime[i].time == tick && spawnTime[i].fresh)
 		{
 			enemies.push(spawnTime[i].enemy);
+			enemies[enemies.length - 1].type = player.type;
 			spawnTime[i].fresh = false;
 		}
 	}
