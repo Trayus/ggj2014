@@ -74,29 +74,46 @@ var Player = function(x, y)
 			self.bullettimer = (self.type == 1? 100 : self.type == 2? 40 : 120);
 			if (self.type == 2)
 				if (Math.random() < 0.5) 
-					bullets.push(new Bullet(self.x + self.xoff + 1, self.y + self.yoff, (Math.random() - 0.5) * 0.05, -0.4, "small_p_bullet.png", 3, true)); 
+					bullets.push(new Bullet(self.x + self.xoff + 1, self.y + self.yoff, (Math.random() - 0.5) * 0.05, -0.4, "small_p_bullet.png", 4, true)); 
 				else
-					bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, (Math.random() - 0.5) * 0.05, -0.4, "small_p_bullet.png", 3, true)); 				
+					bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, (Math.random() - 0.5) * 0.05, -0.4, "small_p_bullet.png", 4, true)); 				
 			else
-				bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, (self.type == 1? -0.6 : -0.4), "big_p_bullet.png", 6, true)); 
+				bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, (self.type == 1? -0.6 : -0.4), "big_p_bullet.png", 7, true)); 
 			if (self.type == 0)
 			{
-				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, -0.01, -0.4, "big_p_bullet.png", 3, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, -0.01, -0.4, "big_p_bullet.png", 4, true)); 		
 				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, -0.02, -0.4, "small_p_bullet.png", 1, true)); 		
 				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, -0.04, -0.4, "small_p_bullet.png", 1, true)); 		
 				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0.04, -0.4, "small_p_bullet.png", 1, true)); 		
 				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0.02, -0.4, "small_p_bullet.png", 1, true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0.01, -0.4, "big_p_bullet.png", 3, true)); 				
+				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0.01, -0.4, "big_p_bullet.png", 4, true)); 				
 			}
 		}
 		else
 			self.bullettimer-=dt;
 		
-		particles.push(new Particle(self.x + self.xoff, self.y + 20, Math.random() * 0.1 - 0.05, 0.2, 30));
-		if (self.type == 1)
-		{
-			particles.push(new Particle(self.x + self.xoff + 12, self.y + 18, Math.random() * 0.1 - 0.05, 0.2, 30));
-			particles.push(new Particle(self.x + self.xoff - 12, self.y + 18, Math.random() * 0.1 - 0.05, 0.2, 30));
+		if (Math.random() > 0.7) {
+			particles.push(new Particle(self.x + self.xoff, self.y + 20, Math.random() * 0.1 - 0.05, 0.2, 20));
+			if (self.type == 1)
+			{
+				particles.push(new Particle(self.x + self.xoff + 12, self.y + 18, Math.random() * 0.1 - 0.05, 0.2, 20));
+				particles.push(new Particle(self.x + self.xoff - 12, self.y + 18, Math.random() * 0.1 - 0.05, 0.2, 20));
+			}
+		}
+		
+		if (49 in keysDown) {
+			self.type = 0;
+			self.shipSettings();
+		}
+		
+		if (50 in keysDown) {
+			self.type = 1;
+			self.shipSettings();
+		}
+		
+		if (51 in keysDown) {
+			self.type = 2;
+			self.shipSettings();
 		}
 		
 		if (69 in keysDown && !swap)
@@ -120,9 +137,9 @@ var Player = function(x, y)
 	this.hitbox = function()
 	{
 		if (self.type == 0)
-			return new Hitbox(self.x - 10, self.y + 6, 60, 26);
+			return new Hitbox(self.x - 10, self.y + 6, 50, 20);
 		else
-			return new Hitbox(self.x + 6, self.y + 6, 22, 20);
+			return new Hitbox(self.x + 7, self.y + 6, 22, 20);
 	}
 	
 	this.shipSettings = function()
