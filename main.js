@@ -31,7 +31,7 @@ var twoSecShoot = function(me) {
 	if (tick % 2 === 1) {
 		me.shot = true;
 	}
-	if (tick % 4 === 0 && me.shot && me.type != 1) {
+	if (tick % 4 === 0 && me.shot) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ (me.size + 1) +".png", 2, false));
 		me.shot = false;
 	}
@@ -58,11 +58,11 @@ var fastYMove = function(me) {
 }
 
 var CircleMove = function(me) {
-	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
+	me.y += Math.cos(me.timer/20) * 5 + me.speed;
 	me.x += Math.sin(me.timer/20) * 5;
 }
 var CCircleMove = function(me) {
-	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
+	me.y += Math.cos(me.timer/20) * 5 + me.speed;
 	me.x -= Math.sin(me.timer/20) * 5;
 }
 
@@ -199,11 +199,9 @@ function addspawns()
 	spawnTime.push(new spawn(8, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(16, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(24, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(32, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(8, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(16, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(24, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(32, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(48, new BasicEnemy(100, -20, 0, "large", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(48, new BasicEnemy(450, -20, 0, "large", CCircleMove, twoSecShoot)));
 	
@@ -226,29 +224,23 @@ function addspawns()
 	spawnTime.push(new spawn(260, new BasicEnemy(-50, 0, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(268, new BasicEnemy(-50, 25, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(276, new BasicEnemy(-50, 50, 0, "small", StrafeMove, twoSecShoot)));
-	spawnTime.push(new spawn(284, new BasicEnemy(-50, 75, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(260, new BasicEnemy(500, 0, 0, "small", CStrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(268, new BasicEnemy(500, 25, 0, "small", CStrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(276, new BasicEnemy(500, 50, 0, "small", CStrafeMove, twoSecShoot)));
-	spawnTime.push(new spawn(284, new BasicEnemy(500, 75, 0, "small", CStrafeMove, twoSecShoot)));
 	
 	spawnTime.push(new spawn(280, new BasicEnemy(-100, 0, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(288, new BasicEnemy(-100, 25, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(296, new BasicEnemy(-100, 50, 0, "small", StrafeMove, twoSecShoot)));
-	spawnTime.push(new spawn(304, new BasicEnemy(-100, 75, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(280, new BasicEnemy(550, 0, 0, "small", CStrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(288, new BasicEnemy(550, 25, 0, "small", CStrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(296, new BasicEnemy(550, 50, 0, "small", CStrafeMove, twoSecShoot)));
-	spawnTime.push(new spawn(304, new BasicEnemy(550, 75, 0, "small", CStrafeMove, twoSecShoot)));
 	
 	spawnTime.push(new spawn(300, new BasicEnemy(-150, 0, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(308, new BasicEnemy(-150, 25, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(316, new BasicEnemy(-150, 50, 0, "small", StrafeMove, twoSecShoot)));
-	spawnTime.push(new spawn(324, new BasicEnemy(-150, 75, 0, "small", StrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(300, new BasicEnemy(600, 0, 0, "small", CStrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(308, new BasicEnemy(600, 25, 0, "small", CStrafeMove, twoSecShoot)));
 	spawnTime.push(new spawn(316, new BasicEnemy(600, 50, 0, "small", CStrafeMove, twoSecShoot)));
-	spawnTime.push(new spawn(324, new BasicEnemy(600, 75, 0, "small", CStrafeMove, twoSecShoot)));
 
 }
 
