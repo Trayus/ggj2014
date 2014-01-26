@@ -52,6 +52,8 @@ var Boss = function(x, y, type, move, shoot)
 	
 	this.draw = function(ctx)
 	{
+		ctx.fillStyle = '#ff0000';
+		ctx.fillRect(0,0, self.health, 10);
 		if (self.type == 0) {
 			if (self.wingType == 0) {
 				ctx.drawImage(self.ship11_im, self.x - (self.x % 1), self.y - (self.y % 1));
@@ -85,5 +87,6 @@ var Boss = function(x, y, type, move, shoot)
 				ctx.drawImage(self.ship33_im, self.x - (self.x % 1), self.y - (self.y % 1));
 			}
 		}
+
 	}
 }

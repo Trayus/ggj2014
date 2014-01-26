@@ -7,6 +7,7 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	this.yoff = 8;
 	this.timer = 0;
 	this.size = (size == "small"? 1 : (size == "medium")? 2 : 3);
+	this.graphicSize = (size == "small"? 1 : (size == "medium")? 2 : 4);
 	this.health = 20 * this.size; 
 	this.type = type;
 	this.speed = 1;
@@ -30,22 +31,16 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 		self.move(self);
 		self.timer++;
 		if (self.y > 700) {
-			self.y -= 800;
+			self.y -= 820;
 		}
 	}
 	
 	this.hitbox = function()
 	{
-		if (self.size == 3) {
-			if (self.type == 0)
-				return new Hitbox(self.x - 10, self.y + 6, 60 * 4, 22 * 4);
-			else
-				return new Hitbox(self.x + 5 * 4, self.y + 16, 28 * 4, 16 * 4);	
-		}
 		if (self.type == 0)
-			return new Hitbox(self.x - 10, self.y + 6, 60 * self.size, 22 * self.size);
+			return new Hitbox(self.x - 10, self.y + 6, 60 * self.graphicSize, 22 * self.graphicSize);
 		else
-			return new Hitbox(self.x + 5 * self.size, self.y + 16, 28 * self.size, 16 * self.size);	
+			return new Hitbox(self.x + 5 * self.graphicSize, self.y + 16, 28 * self.graphicSize, 16 * self.graphicSize);	
 	}
 	
 	this.draw = function(ctx)
