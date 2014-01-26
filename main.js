@@ -18,6 +18,7 @@ var scroll = 0, scroll2 = 200;
 var tick = 0;
 
 aud.ontick = function() { tick++; };
+aud.setvolume(0);
 
 //shooting functions
 var fourSecShoot = function(me) {

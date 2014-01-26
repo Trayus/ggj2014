@@ -14,6 +14,8 @@ var Player = function(x, y)
 	this.aship_im.src = "playera.png";
 	this.bship_im = new Image();
 	this.bship_im.src = "playerb.png";
+	this.cship_im = new Image();
+	this.cship_im.src = "playerc.png";
 	var self = this;
 
 	var swap = false;
@@ -64,16 +66,22 @@ var Player = function(x, y)
 	
 		if (self.bullettimer < 0)
 		{
-			self.bullettimer = (self.type == 1? 70 : 50);
-			bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, (self.type == 1? -0.6 : -0.4), "big_p_bullet.png", 2, true)); 
+			self.bullettimer = (self.type == 1? 100 : self.type == 2? 40 : 120);
+			if (self.type == 2)
+				if (Math.random() < 0.5) 
+					bullets.push(new Bullet(self.x + self.xoff + 1, self.y + self.yoff, (Math.random() - 0.5) * 0.05, -0.4, "small_p_bullet.png", 2, true)); 
+				else
+					bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, (Math.random() - 0.5) * 0.05, -0.4, "small_p_bullet.png", 2, true)); 				
+			else
+				bullets.push(new Bullet(self.x + self.xoff, self.y + self.yoff, 0, (self.type == 1? -0.6 : -0.4), "big_p_bullet.png", 3, true)); 
 			if (self.type == 0)
 			{
-				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
-				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
-				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 		
-				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0, -0.4, "small_p_bullet.png", 1, true)); 				
+				bullets.push(new Bullet(self.x + self.xoff - 12, self.y + self.yoff + 8, -0.01, -0.4, "big_p_bullet.png", 3, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 18, self.y + self.yoff + 8, -0.02, -0.4, "small_p_bullet.png", 2, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff - 24, self.y + self.yoff + 8, -0.04, -0.4, "small_p_bullet.png", 2, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 26, self.y + self.yoff + 8, 0.04, -0.4, "small_p_bullet.png", 2, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 20, self.y + self.yoff + 8, 0.02, -0.4, "small_p_bullet.png", 2, true)); 		
+				bullets.push(new Bullet(self.x + self.xoff + 14, self.y + self.yoff + 8, 0.01, -0.4, "big_p_bullet.png", 3, true)); 				
 			}
 		}
 		else
@@ -83,14 +91,14 @@ var Player = function(x, y)
 		if (81 in keysDown && !swap)
 		{
 			self.type += 1;
-			self.type %= 2;
+			self.type %= 3;
 			swap = true;
 			self.shipSettings();
 		}
 		if (69 in keysDown && !swap)
 		{			
 			self.type -= 1;
-			if (self.type < 0) self.type = 1;
+			if (self.type < 0) self.type = 2;
 			swap = true;
 			self.shipSettings();
 		}
@@ -112,6 +120,7 @@ var Player = function(x, y)
 		{
 		case 0: self.speed = 0.12; break;
 		case 1: self.speed = 0.3; break;
+		case 2: self.speed = 0.2; break;
 		}
 	}
 	
@@ -119,8 +128,11 @@ var Player = function(x, y)
 	{
 		if (self.type == 0)
 			ctx.drawImage(self.aship_im, (self.x - 10) - (self.x % 1), self.y - (self.y % 1));
-		else
+		else if (self.type == 1)
 			ctx.drawImage(self.bship_im, self.x - (self.x % 1), self.y - (self.y % 1));
+		else 
+			ctx.drawImage(self.cship_im, self.x - (self.x % 1), self.y - (self.y % 1));
+			
 	}
 	
 	this.shipSettings();
