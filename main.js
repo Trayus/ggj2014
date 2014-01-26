@@ -24,7 +24,7 @@ aud.ontick = function() {
 
 //shooting functions
 var twoSecShoot = function(me) {
-	if (tick % 4 === 0 && tick % 8 != 0 && me.type === 0 && me.shot) {
+	if (tick % 8 === 0 && me.shot) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet"+ me.size +".png", 1, false));
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet"+ me.size +".png", 1, false));
 		me.shot = false;
@@ -32,19 +32,32 @@ var twoSecShoot = function(me) {
 	if (tick % 2 === 1) {
 		me.shot = true;
 	}
-	if (tick % 8 === 0 && me.shot) {
+	if (tick % 4 === 0 && me.shot && me.type != 1) {
 		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ (me.size + 1) +".png", 2, false));
 		me.shot = false;
 	}
+	if (tick % 2 === 0 && me.shot && me.type == 0) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ me.size +".png", 1, false));
+		me.shot = false;
+	}
+}
+var noShoot = function(me) {
+	//nothing
 }
 //moving functions
 var sinXMove = function(me) {
-	me.y += me.speed;
+	me.y += me.speed * 2;
 	me.x += Math.sin(me.timer/50);
 }
-var fastYMove = function(me) {
-	me.y += me.speed * 3;
+var CsinXMove = function(me) {
+	me.y += me.speed * 2;
+	me.x -= Math.sin(me.timer/50);
 }
+
+var fastYMove = function(me) {
+	me.y += me.speed * 6;
+}
+
 var CircleMove = function(me) {
 	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
 	me.x += Math.sin(me.timer/20) * 5;
@@ -52,6 +65,25 @@ var CircleMove = function(me) {
 var CCircleMove = function(me) {
 	me.y += Math.cos(me.timer/20) * 5 + (me.speed / 2);
 	me.x -= Math.sin(me.timer/20) * 5;
+}
+
+var StrafeMove = function(me) {
+	if(me.timer < 100)
+	{
+		me.x += 5;
+	}
+	else {
+		me.y += me.speed * 2;
+	}
+}
+var CStrafeMove = function(me) {
+	if(me.timer < 100)
+	{
+		me.x -= 5;
+	}
+	else {
+		me.y += me.speed * 2;
+	}
 }
 
 var spawn = function(time, enemy) {
@@ -137,7 +169,7 @@ function collisionVSenemies()
 			if (bullets[j].playerbullet && enemies[i].hitbox().hits(bullets[j].hitbox()))
 			{		
 				if (enemies[i].type == 2)
-					enemies[i].health -= (bullets[j].damage - 1) / 2;
+					enemies[i].health -= (bullets[j].damage - 1);
 				else
 					enemies[i].health -= bullets[j].damage;
 				bullets.splice(j, 1);
@@ -167,16 +199,59 @@ function cleanbullets()
 function addspawns()
 {
 	spawnTime = new Array();
-	spawnTime.push(new spawn(8, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(16, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(24, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-	spawnTime.push(new spawn(32, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(8, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(16, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(24, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
+	spawnTime.push(new spawn(32, new BasicEnemy(50, -20, 0, "small", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(8, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(16, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(24, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(32, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(48, new BasicEnemy(100, -20, 0, "large", CircleMove, twoSecShoot)));
 	spawnTime.push(new spawn(48, new BasicEnemy(450, -20, 0, "large", CCircleMove, twoSecShoot)));
+	
+	spawnTime.push(new spawn(180, new BasicEnemy(0, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(184, new BasicEnemy(50, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(188, new BasicEnemy(100, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(192, new BasicEnemy(150, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(196, new BasicEnemy(200, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(180, new BasicEnemy(450, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(184, new BasicEnemy(400, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(188, new BasicEnemy(350, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(192, new BasicEnemy(300, -20, 0, "small", fastYMove, noShoot)));
+	spawnTime.push(new spawn(196, new BasicEnemy(250, -20, 0, "small", fastYMove, noShoot)));
+	
+	spawnTime.push(new spawn(224, new BasicEnemy(0, -20, 0, "medium", sinXMove, twoSecShoot)));
+	spawnTime.push(new spawn(240, new BasicEnemy(125, -20, 0, "medium", sinXMove, twoSecShoot)));
+	spawnTime.push(new spawn(240, new BasicEnemy(250, -20, 0, "medium", CsinXMove, twoSecShoot)));
+	spawnTime.push(new spawn(224, new BasicEnemy(375, -20, 0, "medium", CsinXMove, twoSecShoot)));
+	
+	spawnTime.push(new spawn(260, new BasicEnemy(-50, 0, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(268, new BasicEnemy(-50, 25, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(276, new BasicEnemy(-50, 50, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(284, new BasicEnemy(-50, 75, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(260, new BasicEnemy(500, 0, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(268, new BasicEnemy(500, 25, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(276, new BasicEnemy(500, 50, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(284, new BasicEnemy(500, 75, 0, "small", CStrafeMove, twoSecShoot)));
+	
+	spawnTime.push(new spawn(280, new BasicEnemy(-100, 0, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(288, new BasicEnemy(-100, 25, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(296, new BasicEnemy(-100, 50, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(304, new BasicEnemy(-100, 75, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(280, new BasicEnemy(550, 0, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(288, new BasicEnemy(550, 25, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(296, new BasicEnemy(550, 50, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(304, new BasicEnemy(550, 75, 0, "small", CStrafeMove, twoSecShoot)));
+	
+	spawnTime.push(new spawn(300, new BasicEnemy(-150, 0, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(308, new BasicEnemy(-150, 25, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(316, new BasicEnemy(-150, 50, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(324, new BasicEnemy(-150, 75, 0, "small", StrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(300, new BasicEnemy(600, 0, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(308, new BasicEnemy(600, 25, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(316, new BasicEnemy(600, 50, 0, "small", CStrafeMove, twoSecShoot)));
+	spawnTime.push(new spawn(324, new BasicEnemy(600, 75, 0, "small", CStrafeMove, twoSecShoot)));
 
 }
 

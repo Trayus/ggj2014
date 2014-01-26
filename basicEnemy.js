@@ -25,6 +25,9 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 		self.shoot(self);
 		self.move(self);
 		self.timer++;
+		if (self.y > 700) {
+			self.y -= 800;
+		}
 	}
 	
 	this.shipSettings = function()
@@ -43,7 +46,7 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 		if (self.type == 0)
 			return new Hitbox(self.x - 10, self.y + 6, 60 * self.size, 22 * self.size);
 		else
-			return new Hitbox(self.x + 6 * self.size, self.y + 6, 24 * self.size, 20 * self.size);	
+			return new Hitbox(self.x + 6 * self.size, self.y + 16, 24 * self.size, 14 * self.size);	
 	}
 	
 	this.draw = function(ctx)
