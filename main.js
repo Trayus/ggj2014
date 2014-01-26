@@ -17,31 +17,23 @@ var timer = 0;
 var scroll = 0, scroll2 = 200;
 var tick = 0;
 
-aud.ontick = function() { tick++; };
+aud.ontick = function() {
+	tick++; 
+};
 
 //shooting functions
-var fourSecShoot = function(me) {
-	if (me.timer % 100 === 0 && me.type === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
-	}
-	if (self.timer % 200 === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
-	}
-}
 var twoSecShoot = function(me) {
-	if (me.timer % 50 === 0 && me.type === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+	if (tick % 4 === 0 && tick % 8 != 0 && me.type === 0 && me.shot) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, -0.02, .2, "e_bullet"+ me.size +".png", 1, false));
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.02, .2, "e_bullet"+ me.size +".png", 1, false));
+		me.shot = false;
 	}
-	if (self.timer % 100 === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "big_p_bullet.png", 1, false));
+	if (tick % 2 === 1) {
+		me.shot = true;
 	}
-}
-var sideTwoSecShoot = function(me) {
-	if (me.timer % 50 === 0 && me.type === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.4, 0, "big_p_bullet.png", 1, false));
-	}
-	if (self.timer % 100 === 0) {
-		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0.4, 0, "big_p_bullet.png", 1, false));
+	if (tick % 8 === 0 && me.shot) {
+		bullets.push(new Bullet(me.x + me.xoff - 12, me.y + me.yoff + 8, 0, .2, "e_bullet"+ me.size +".png", 1, false));
+		me.shot = false;
 	}
 }
 //moving functions
@@ -64,17 +56,10 @@ var CCircleMove = function(me) {
 var spawn = function(time, enemy) {
 	this.time = time;
 	this.enemy = enemy;
+	this.fresh = true;
 }
 
 var spawnTime = new Array();
-spawnTime.push(new spawn(100, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-spawnTime.push(new spawn(200, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-spawnTime.push(new spawn(300, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-spawnTime.push(new spawn(400, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-spawnTime.push(new spawn(100, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
-spawnTime.push(new spawn(200, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
-spawnTime.push(new spawn(300, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
-spawnTime.push(new spawn(400, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 
 function loadGame()
 {
@@ -179,6 +164,17 @@ function update(dt)
 			aud.generatepattern(0.8, 0.8, 8, 2, 9999);
 			aud.playstop();
 			tick = 0;	
+			spawnTime.push(new spawn(8, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(16, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(24, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(32, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(8, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(16, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(24, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(32, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(48, new BasicEnemy(100, -20, 0, "large", CircleMove, twoSecShoot)));
+			spawnTime.push(new spawn(48, new BasicEnemy(450, -20, 0, "large", CCircleMove, twoSecShoot)));
+
 		}
 	}
 	else if (gamestate == GAMEOVER)
@@ -215,9 +211,10 @@ function update(dt)
 function spawnEnemies(timer) {
 	for (i = 0; i < spawnTime.length; i++) 
 	{
-		if (spawnTime[i].time == timer)
+		if (spawnTime[i].time == tick && spawnTime[i].fresh)
 		{
 			enemies.push(spawnTime[i].enemy);
+			spawnTime[i].fresh = false;
 		}
 	}
 }

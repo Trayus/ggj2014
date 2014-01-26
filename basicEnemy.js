@@ -16,6 +16,7 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	this.bship_im = new Image();
 	this.bship_im.src = "enemyb_" + size + ".png";
 	var self = this;
+	var shot = true;
 	
 	this.update = function(dt)
 	{
