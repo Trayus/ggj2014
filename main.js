@@ -60,12 +60,12 @@ var spawn = function(time, enemy) {
 }
 
 var spawnTime = new Array();
-spawnTime.push(new spawn(100, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-spawnTime.push(new spawn(200, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
+spawnTime.push(new spawn(100, new BasicEnemy(100, -20, 2, "small", CircleMove, twoSecShoot)));
+spawnTime.push(new spawn(200, new BasicEnemy(100, -20, 2, "small", CircleMove, twoSecShoot)));
 spawnTime.push(new spawn(300, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
 spawnTime.push(new spawn(400, new BasicEnemy(100, -20, 0, "small", CircleMove, twoSecShoot)));
-spawnTime.push(new spawn(100, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
-spawnTime.push(new spawn(200, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
+spawnTime.push(new spawn(100, new BasicEnemy(450, -20, 2, "small", CCircleMove, twoSecShoot)));
+spawnTime.push(new spawn(200, new BasicEnemy(450, -20, 2, "small", CCircleMove, twoSecShoot)));
 spawnTime.push(new spawn(300, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 spawnTime.push(new spawn(400, new BasicEnemy(450, -20, 0, "small", CCircleMove, twoSecShoot)));
 
@@ -136,7 +136,10 @@ function collisionVSenemies()
 		{
 			if (bullets[j].playerbullet && enemies[i].hitbox().hits(bullets[j].hitbox()))
 			{		
-				enemies[i].health -= bullets[j].damage;
+				if (enemies[i].type == 2)
+					enemies[i].health -= (bullets[j].damage - 1) / 2;
+				else
+					enemies[i].health -= bullets[j].damage;
 				bullets.splice(j, 1);
 				j--;
 			}

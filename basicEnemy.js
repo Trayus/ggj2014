@@ -15,6 +15,8 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	this.aship_im.src = "enemya_" + size + ".png";
 	this.bship_im = new Image();
 	this.bship_im.src = "enemyb_" + size + ".png";
+	this.cship_im = new Image();
+	this.cship_im.src = "enemyc_" + size + ".png";
 	var self = this;
 	
 	this.update = function(dt)
@@ -47,7 +49,9 @@ var BasicEnemy = function(x, y, type, size, move, shoot)
 	{
 		if (self.type == 0)
 			ctx.drawImage(self.aship_im, (self.x - 10) - (self.x % 1), self.y - (self.y % 1));
-		else
+		else if (self.type == 1)
 			ctx.drawImage(self.bship_im, self.x - (self.x % 1), self.y - (self.y % 1));
+		else
+			ctx.drawImage(self.cship_im, self.x - (self.x % 1), self.y - (self.y % 1));
 	}
 }
