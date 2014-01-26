@@ -457,9 +457,6 @@ function update(dt)
 			aud.playstop();
 			tick = 0;	
 			addspawns();
-			enemies.push(new BasicEnemy(0, 50, 0, "small", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(0, 100, 0, "medium", noMove, twoSecShoot));
-			enemies.push(new BasicEnemy(0, 200, 0, "large", noMove, twoSecShoot));
 		}
 	}
 	else if (gamestate == GAMEOVER || gamestate == VICTORY)
@@ -515,6 +512,8 @@ function spawnEnemies(timer) {
 	if (tick > 400 && bossOut == false && enemies.length==0) { 
 		enemies.push(new Boss(-50, -150, player.type, bossMove, bossShoot));
 		bossOut = true;
+		aud.generatepattern(0.9, 0.9, 6, 3, 231232);
+		aud.playstop();
 	}
 	if (tick > 400 && bossOut && enemies.length==0) { 
 		aud.generatepattern(0.0, 0.9, 8, 2, 99999);
