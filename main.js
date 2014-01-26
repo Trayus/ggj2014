@@ -58,6 +58,7 @@ var timer = 0;
 var scroll = 0, scroll2 = 200;
 var tick = 0;
 var bossOut = false;
+var bossTick = -1;
 
 aud.ontick = function() {
 	tick++; 
@@ -617,13 +618,16 @@ function spawnEnemies(timer) {
 			spawnTime[i].fresh = false;
 		}
 	}
-	if (tick > 400 && bossOut == false && enemies.length==0) { 
-		enemies.push(new Boss(-50, -150, player.type, bossMove, bossShoot));
-		bossOut = true;
+	if (tick > 400 && bossOut == false && enemies.length==0 && bossTick == -1) { 
+		bossTick = tick + 16;
 		aud.generatepattern(0.9, 0.9, 6, 3, 231232);
 		aud.playstop();
 	}
-	if (tick > 400 && bossOut && enemies.length==0) { 
+	if (tick == bossTick && !bossOut) {
+		enemies.push(new Boss(-50, -150, player.type, bossMove, bossShoot));
+		bossOut = true;
+	}
+	if (tick > bossTick && bossOut && enemies.length==0) { 
 		aud.generatepattern(0.0, 0.9, 8, 2, 99999);
 		aud.playstop();
 		bossOut = false;
